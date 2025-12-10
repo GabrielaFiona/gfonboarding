@@ -687,16 +687,24 @@ function renderInvoice(invoice) {
   emptyCard.classList.add("hidden");
   contentWrap.classList.remove("hidden");
 
-  document.getElementById("inv-client-name").textContent =
-    invoice.clientName;
-  document.getElementById("inv-business-name").textContent =
-    invoice.businessName || "—";
-  document.getElementById("inv-email").textContent = invoice.clientEmail;
-  document.getElementById("inv-project-name").textContent =
-    invoice.projectName || invoice.package.name;
-  document.getElementById("inv-goal").textContent =
-    invoice.businessGoalLabel || "—";
-  document.getElementById("inv-date").textContent = invoice.invoiceDate;
+ const invClient = document.getElementById("inv-client-name");
+if (invClient) invClient.textContent = invoice.clientName;
+
+const invBiz = document.getElementById("inv-business-name");
+if (invBiz) invBiz.textContent = invoice.businessName || "—";
+
+const invEmail = document.getElementById("inv-email");
+if (invEmail) invEmail.textContent = invoice.clientEmail;
+
+const invProject = document.getElementById("inv-project-name");
+if (invProject)
+  invProject.textContent = invoice.projectName || invoice.package.name;
+
+const invGoal = document.getElementById("inv-goal");
+if (invGoal) invGoal.textContent = invoice.businessGoalLabel || "—";
+
+const invDate = document.getElementById("inv-date");
+if (invDate) invDate.textContent = invoice.invoiceDate;
 
   const tbody = document.getElementById("invoice-line-items");
   tbody.innerHTML = "";
