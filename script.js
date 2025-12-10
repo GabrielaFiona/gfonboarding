@@ -1,5 +1,5 @@
 // ===============================
-// Data (from your spreadsheet)
+// Data (from your spreadsheet & logic)
 // ===============================
 
 const PACKAGES = [
@@ -9,12 +9,12 @@ const PACKAGES = [
     basePrice: 750,
     duration: "5–7 days",
     description:
-      "A clean, functional Google Site with essential business information and a simple contact option. No custom branding or custom domain setup included.",
+      "A clean, functional Google Site with essential business information and a simple contact option.",
     brandingDescription:
-      "Great for new or budget-conscious businesses that need a simple, clear online presence.",
+      "Great for new or budget-conscious businesses who need a simple, clear online presence.",
     revisions:
       "Includes light revisions focused on text tweaks, image swaps, and minor layout changes.",
-    support: "30 days launch support (up to ~1 hour of small content tweaks)."
+    support: "30 days of launch support (up to ~1 hour of small content tweaks)."
   },
   {
     id: "polished-brand-site",
@@ -22,13 +22,13 @@ const PACKAGES = [
     basePrice: 2250,
     duration: "2–3 weeks",
     description:
-      "A refined, on-brand Google Site with a more polished layout and visual design. Includes multiple pages and stronger storytelling.",
+      "A refined, on-brand Google Site with multiple pages and stronger storytelling.",
     brandingDescription:
       "For businesses ready to look more established online with a cohesive, branded experience.",
     revisions:
       "Includes 2 rounds of consolidated revisions (layout, content tweaks, imagery).",
     support:
-      "30 days launch support (up to ~2 hours of tweaks) plus basic guidance on using the site."
+      "30 days of launch support (up to ~2 hours of tweaks) plus basic guidance on using the site."
   },
   {
     id: "professional-website",
@@ -36,13 +36,13 @@ const PACKAGES = [
     basePrice: 4000,
     duration: "3–4 weeks",
     description:
-      "A modern, higher-touch custom website designed around real operations: bookings, analytics, stronger SEO base, and more complex structure.",
+      "A higher-touch, more custom build for businesses that rely on their website for operations.",
     brandingDescription:
-      "For growing businesses that rely on their website to drive bookings, sales, or applications.",
+      "For growing businesses that need bookings, inquiries, or applications to flow through the site.",
     revisions:
       "Includes up to 3 rounds of revisions total (design, content, and core functionality).",
     support:
-      "45 days launch support (up to ~3 hours of tweaks) plus a follow-up call and basic analytics review."
+      "45 days of launch support plus a follow-up call and basic analytics review."
   },
   {
     id: "business-systems-strategy-session",
@@ -51,11 +51,11 @@ const PACKAGES = [
     duration:
       "Up to 3 hours included; additional time billed separately with approval.",
     description:
-      "A focused strategy intensive to untangle backend systems, workflows, and website needs so you have a clear path forward.",
+      "A focused strategy intensive to untangle backend systems, workflows, and website needs.",
     brandingDescription:
       "Best for clients who need clarity and systems before investing in a full build or rebuild.",
     revisions:
-      "Session fee covers the strategy time; implementation or follow-up work is scoped separately.",
+      "Session fee covers strategy time; implementation or follow-up work is scoped separately.",
     support:
       "Support is typically tied to implementation services booked after the session."
   }
@@ -99,9 +99,9 @@ const ADDONS = [
     name: "Advanced Workflow Automation",
     standalonePrice: 600,
     description:
-      "Implements or refines a workflow connecting tools (forms, email, tasks) so things happen automatically after submissions.",
+      "Implements or refines a workflow connecting tools (forms, email, tasks) so things happen automatically.",
     notes:
-      "Requires an approved workflow map. Great for onboarding, intake, follow-up sequences, or internal processes.",
+      "Great for onboarding, intake, follow-up sequences, or internal processes once a workflow map is approved.",
     bundlePriceByPackage: {
       "basic-website": 510,
       "polished-brand-site": 480,
@@ -117,7 +117,7 @@ const ADDONS = [
     description:
       "Product or service listing for up to ~25 items with fields like name, price, and basic details.",
     notes:
-      "Client provides product details and images. Great for small shops, menus, or service menus.",
+      "Client provides product details and images. Great for menus, small shops, or service menus.",
     bundlePriceByPackage: {
       "basic-website": 340,
       "polished-brand-site": 320,
@@ -133,7 +133,7 @@ const ADDONS = [
     description:
       "Connects your payment provider and adds simple payment links or buttons into the site.",
     notes:
-      "Great for deposits, simple service payments, or donation links. Requires a payment provider account.",
+      "Great for deposits, simple service payments, or donation links. Requires a payment account.",
     bundlePriceByPackage: {
       "basic-website": 320,
       "polished-brand-site": 310,
@@ -156,15 +156,55 @@ const ADDONS = [
       "professional-website": 425
     },
     support:
-      "Includes 30 days of support for embed/chart issues and 1 round of minor label/color/layout adjustments."
+      "Includes 30 days of support for embed/chart issues and 1 round of minor label/color/layout tweaks."
   }
 ];
 
-// Core questions (CHECKLIST_MAIN)
+// Business goal dropdown options
+const BUSINESS_GOALS = [
+  {
+    id: "look-established",
+    label: "Look more established and professional online"
+  },
+  {
+    id: "more-inquiries",
+    label: "Increase qualified inquiries / bookings"
+  },
+  {
+    id: "clarify-offer",
+    label: "Clarify services so people instantly understand what they do"
+  },
+  {
+    id: "sell-offers",
+    label: "Showcase and sell offers/products more clearly"
+  },
+  {
+    id: "streamline-intake",
+    label: "Streamline client intake & systems"
+  },
+  {
+    id: "info-hub",
+    label: "Create a simple, findable information hub"
+  },
+  {
+    id: "other",
+    label: "Other – we’ll define this together"
+  }
+];
+
+// Core questions (CHECKLIST_MAIN style)
 const MAIN_QUESTIONS = [
   {
+    category: "Business & Audience",
+    question: "Who is your primary audience, and what do they usually come to you for?"
+  },
+  {
+    category: "Business & Audience",
+    question: "What feels most important to highlight on your homepage?"
+  },
+  {
     category: "Domain & Tech",
-    question: "Do you already have a domain? (where is it registered?)"
+    question: "Do you already have a domain? If yes, where is it registered?"
   },
   {
     category: "Domain & Tech",
@@ -173,49 +213,41 @@ const MAIN_QUESTIONS = [
   {
     category: "Pages & Structure",
     question:
-      "List all pages you want on the site (Home, About, Services, Contact, etc.)."
+      "List the pages you want on the site (Home, About, Services, Contact, etc.)."
   },
   {
     category: "Forms & Interactions",
     question:
-      "What forms do you need (contact, booking request, application, etc.) and where should submissions go?"
+      "What forms do you need (contact, booking request, application, etc.), and where should submissions go?"
   },
   {
     category: "Business Info",
-    question: "Business tagline or elevator pitch"
+    question: "Business tagline or elevator pitch."
   },
   {
     category: "Business Info",
-    question: "Core services list"
-  },
-  {
-    category: "Business Info",
-    question: "Primary service area(s) / locations"
+    question: "Core services list (top 3–5)."
   },
   {
     category: "Copy & Content",
     question:
-      "For each page where YOU provide copy, please give main headline, paragraph, bullets, and call to action."
+      "For pages where you provide copy, give main headline, key paragraph, and call to action."
   },
   {
     category: "Assets",
-    question: "Logo files (where are they stored?)"
+    question: "Logo files (where are they stored?) and any existing brand guidelines."
   },
   {
     category: "Assets",
-    question: "Brand colors & fonts (or do you need a Brand Kit?)"
-  },
-  {
-    category: "Assets",
-    question: "Photos (team, location, products) – where are they stored?"
+    question: "Brand colors & fonts (or do you need a Brand Kit?)."
   },
   {
     category: "Systems & Integrations",
-    question: "Booking tools (Calendly, Acuity, etc.) + login info if needed"
+    question: "Booking tools (Calendly, Acuity, etc.) + login info if needed."
   },
   {
     category: "Systems & Integrations",
-    question: "Payment tools (Stripe, Square, PayPal)"
+    question: "Payment tools (Stripe, Square, PayPal, etc.)."
   },
   {
     category: "Systems & Integrations",
@@ -224,7 +256,7 @@ const MAIN_QUESTIONS = [
   }
 ];
 
-// Extra questions by add-on (CHECKLIST_ADDONS)
+// Extra questions by add-on (CHECKLIST_ADDONS style)
 const ADDON_QUESTIONS = {
   "Client/Staff Portal Setup": [
     "Who is the portal for (staff, clients, volunteers)?",
@@ -235,23 +267,28 @@ const ADDON_QUESTIONS = {
   "Advanced Workflow Automation": [
     "What main process are we automating (example: new client intake)?",
     "What form/tool starts the process (name + link)?",
-    "What should happen immediately after submission (emails, tasks, events)?",
+    "What should happen after a new submission (emails, tasks, events)?",
     "What tools do you already use for tasks and communication?"
   ],
   "Inventory/Product Listing (Medium)": [
-    "Do you have a list of up to 25 products/services ready? Where is it?",
+    "Do you have a list of up to ~25 products/services ready? Where is it stored?",
     "Do you have product photos ready? Where are they?",
-    "What fields do you want shown on each product (name, scent, size, price, etc.)?"
+    "What fields should show on each product (name, scent, size, price, etc.)?"
   ],
   "Payment Link Integration": [
     "Which payment provider will you use (Stripe/Square/PayPal)?",
     "Do you already have an account (email)?",
-    "What exact payment amounts and descriptions do you need (services/deposits)?"
+    "What exact payment amounts and descriptions do you need (services, deposits, etc.)?"
   ],
   "Custom Data Visualization": [
-    "What data do you want publicly shown (fundraiser progress, class spots, etc.)?",
+    "What data do you want publicly shown (fundraiser progress, signups, etc.)?",
     "Where does that data live now (sheet name/link)?",
     "How often is this data updated and who is responsible?"
+  ],
+  "Brand Kit": [
+    "Do you have any existing logo/sketches or inspiration you’d like me to see?",
+    "Are there colors you’re drawn to or colors you absolutely do not want?",
+    "If your brand was a person, how would you describe their personality?"
   ]
 };
 
@@ -295,7 +332,6 @@ function getAddonUnitPrice(addon, packageId) {
   return addon.standalonePrice;
 }
 
-// Holds the last generated invoice data
 let currentInvoice = null;
 
 // ===============================
@@ -309,7 +345,7 @@ function initPackagesSelect() {
   select.innerHTML = "";
   const placeholder = document.createElement("option");
   placeholder.value = "";
-  placeholder.textContent = "Select a package...";
+  placeholder.textContent = "Select a package…";
   placeholder.disabled = true;
   placeholder.selected = true;
   select.appendChild(placeholder);
@@ -352,6 +388,20 @@ function initAddonsCheckboxes() {
     row.appendChild(input);
     row.appendChild(labelWrap);
     container.appendChild(row);
+  });
+}
+
+function initBusinessGoalSelect() {
+  const select = document.getElementById("business-goal");
+  if (!select) return;
+
+  select.innerHTML = "";
+  BUSINESS_GOALS.forEach((goal, index) => {
+    const opt = document.createElement("option");
+    opt.value = goal.id;
+    opt.textContent = goal.label;
+    if (index === 0) opt.selected = true;
+    select.appendChild(opt);
   });
 }
 
@@ -399,20 +449,20 @@ function initNav() {
 // ===============================
 
 function updatePackageDescription() {
-  const selectId = getSelectedPackageId();
+  const pkgId = getSelectedPackageId();
   const descEl = document.getElementById("package-description");
   if (!descEl) return;
 
-  if (!selectId) {
+  if (!pkgId) {
     descEl.textContent = "Select a package to see details and pricing.";
     return;
   }
 
-  const pkg = findPackageById(selectId);
+  const pkg = findPackageById(pkgId);
   if (!pkg) return;
 
   descEl.innerHTML = `
-    <strong>${pkg.name}</strong> &middot; ${formatCurrency(pkg.basePrice)}<br />
+    <strong>${pkg.name}</strong> · ${formatCurrency(pkg.basePrice)}<br />
     <span>${pkg.description}</span><br />
     <span><strong>Timeline:</strong> ${pkg.duration}</span><br />
     <span><strong>Support:</strong> ${pkg.support}</span>
@@ -424,8 +474,10 @@ function updatePriceSummary() {
   const subtotalEl = document.getElementById("subtotal-amount");
   const discountEl = document.getElementById("discount-amount");
   const totalEl = document.getElementById("total-amount");
+  const depositEl = document.getElementById("summary-deposit");
 
-  if (!container || !subtotalEl || !discountEl || !totalEl) return;
+  if (!container || !subtotalEl || !discountEl || !totalEl || !depositEl)
+    return;
 
   const pkgId = getSelectedPackageId();
   const pkg = pkgId ? findPackageById(pkgId) : null;
@@ -461,14 +513,17 @@ function updatePriceSummary() {
   });
 
   if (!pkg && selectedAddons.length === 0) {
-    container.textContent = "Select a package and add-ons to see an itemized quote.";
+    container.textContent =
+      "Select a package and add-ons to see an itemized quote.";
   }
 
   const total = Math.max(subtotal - discountValue, 0);
+  const deposit = Math.round(total * 0.5);
 
   subtotalEl.textContent = formatCurrency(subtotal);
   discountEl.textContent = `-${formatCurrency(discountValue)}`;
   totalEl.textContent = formatCurrency(total);
+  depositEl.textContent = formatCurrency(deposit);
 }
 
 function updateQuestions() {
@@ -476,7 +531,6 @@ function updateQuestions() {
   if (!listEl) return;
   listEl.innerHTML = "";
 
-  // Core website questions always show (these cover your main checklist)
   let currentCategory = null;
   MAIN_QUESTIONS.forEach(q => {
     if (q.category !== currentCategory) {
@@ -496,7 +550,6 @@ function updateQuestions() {
     listEl.appendChild(item);
   });
 
-  // Add-on specific questions only show when that service is selected
   const selectedAddons = getSelectedAddons();
   selectedAddons.forEach(addon => {
     const qs = ADDON_QUESTIONS[addon.name];
@@ -504,7 +557,7 @@ function updateQuestions() {
 
     const title = document.createElement("div");
     title.className = "question-group-title";
-    title.textContent = `${addon.name} – Additional Questions`;
+    title.textContent = `${addon.name} – Additional questions`;
     listEl.appendChild(title);
 
     qs.forEach(question => {
@@ -527,6 +580,21 @@ function buildInvoiceDataFromForm() {
   const clientName = document.getElementById("client-name").value.trim();
   const clientEmail = document.getElementById("client-email").value.trim();
   const businessName = document.getElementById("business-name").value.trim();
+  const businessIndustry =
+    document.getElementById("business-industry").value.trim();
+  const businessLocation =
+    document.getElementById("business-location").value.trim();
+  const currentWebsite =
+    document.getElementById("current-website").value.trim();
+  const businessSummary =
+    document.getElementById("business-summary").value.trim();
+
+  const businessGoalId = document.getElementById("business-goal").value;
+  const goalDef = BUSINESS_GOALS.find(g => g.id === businessGoalId);
+  const businessGoalLabel = goalDef ? goalDef.label : "";
+  const businessGoalNotes =
+    document.getElementById("business-goal-notes").value.trim();
+
   const projectName = document.getElementById("project-name").value.trim();
   const dateVal = document.getElementById("start-date").value;
   const notes = document.getElementById("notes").value.trim();
@@ -539,12 +607,11 @@ function buildInvoiceDataFromForm() {
 
   if (!clientName || !clientEmail || !pkg) {
     alert(
-      "Please make sure you have entered Client Name, Client Email, and selected a package."
+      "Please make sure you have entered Client name, Client email, and selected a package."
     );
     return null;
   }
 
-  // Compute line items
   const lineItems = [];
   let subtotal = 0;
 
@@ -568,7 +635,6 @@ function buildInvoiceDataFromForm() {
   const deposit = Math.round(total * 0.5);
   const remaining = total - deposit;
 
-  // Format date for display
   let prettyDate = "";
   if (dateVal) {
     const d = new Date(dateVal);
@@ -592,6 +658,12 @@ function buildInvoiceDataFromForm() {
     clientName,
     clientEmail,
     businessName,
+    businessIndustry,
+    businessLocation,
+    currentWebsite,
+    businessSummary,
+    businessGoalLabel,
+    businessGoalNotes,
     projectName,
     invoiceDate: prettyDate,
     notes,
@@ -615,19 +687,17 @@ function renderInvoice(invoice) {
   emptyCard.classList.add("hidden");
   contentWrap.classList.remove("hidden");
 
-  const clientNameEl = document.getElementById("inv-client-name");
-  const businessNameEl = document.getElementById("inv-business-name");
-  const emailEl = document.getElementById("inv-email");
-  const projectEl = document.getElementById("inv-project-name");
-  const dateEl = document.getElementById("inv-date");
+  document.getElementById("inv-client-name").textContent =
+    invoice.clientName;
+  document.getElementById("inv-business-name").textContent =
+    invoice.businessName || "—";
+  document.getElementById("inv-email").textContent = invoice.clientEmail;
+  document.getElementById("inv-project-name").textContent =
+    invoice.projectName || invoice.package.name;
+  document.getElementById("inv-goal").textContent =
+    invoice.businessGoalLabel || "—";
+  document.getElementById("inv-date").textContent = invoice.invoiceDate;
 
-  clientNameEl.textContent = invoice.clientName;
-  businessNameEl.textContent = invoice.businessName || "—";
-  emailEl.textContent = invoice.clientEmail;
-  projectEl.textContent = invoice.projectName || invoice.package.name;
-  dateEl.textContent = invoice.invoiceDate;
-
-  // Line items
   const tbody = document.getElementById("invoice-line-items");
   tbody.innerHTML = "";
   invoice.lineItems.forEach(item => {
@@ -642,7 +712,6 @@ function renderInvoice(invoice) {
     tbody.appendChild(tr);
   });
 
-  // Totals
   document.getElementById("inv-subtotal").textContent = formatCurrency(
     invoice.subtotal
   );
@@ -658,26 +727,39 @@ function renderInvoice(invoice) {
     invoice.remaining
   );
 
-  // Email inputs prefill
   const emailToInput = document.getElementById("invoice-email-to");
   if (emailToInput && !emailToInput.value) {
     emailToInput.value = invoice.clientEmail;
   }
 }
 
-// Build the email body text
+// ===============================
+// Email body
+// ===============================
 
 function buildInvoiceEmailBody(invoice) {
   const lines = [];
 
   lines.push(`Hi ${invoice.clientName},`);
   lines.push("");
-  lines.push(
-    `Here is the summary of your project with ${invoice.businessName || "my studio"}:`
-  );
+  lines.push("Here’s the summary of your project and website investment:");
   lines.push("");
 
-  lines.push("Items:");
+  if (invoice.businessName || invoice.businessGoalLabel) {
+    lines.push("Business context:");
+    if (invoice.businessName) {
+      lines.push(`• Business: ${invoice.businessName}`);
+    }
+    if (invoice.businessGoalLabel) {
+      lines.push(`• Main objective: ${invoice.businessGoalLabel}`);
+    }
+    if (invoice.businessLocation) {
+      lines.push(`• Location: ${invoice.businessLocation}`);
+    }
+    lines.push("");
+  }
+
+  lines.push("Scope & pricing:");
   invoice.lineItems.forEach(item => {
     lines.push(`• ${item.label}: ${formatCurrency(item.amount)}`);
   });
@@ -688,17 +770,32 @@ function buildInvoiceEmailBody(invoice) {
   lines.push("");
   lines.push(`50% deposit due: ${formatCurrency(invoice.deposit)}`);
   lines.push(
-    `Remaining 50%: ${formatCurrency(invoice.remaining)} (typically due after launch or as agreed).`
+    `Remaining 50%: ${formatCurrency(
+      invoice.remaining
+    )} (typically due after launch or as agreed).`
   );
   lines.push("");
 
+  if (invoice.businessGoalNotes || invoice.businessSummary) {
+    lines.push("Notes from our call:");
+    if (invoice.businessSummary) {
+      lines.push(`• About the business: ${invoice.businessSummary}`);
+    }
+    if (invoice.businessGoalNotes) {
+      lines.push(`• What success looks like: ${invoice.businessGoalNotes}`);
+    }
+    lines.push("");
+  }
+
   if (invoice.notes) {
-    lines.push("Notes / goals discussed:");
+    lines.push("Project-specific notes:");
     lines.push(invoice.notes);
     lines.push("");
   }
 
-  lines.push("If everything looks good, I’ll send the next steps and timeline.");
+  lines.push(
+    "If everything looks good, I’ll send over the next steps and timeline."
+  );
   lines.push("");
   lines.push("Thank you!");
   return lines.join("\n");
@@ -744,7 +841,7 @@ function initSendInvoiceButton() {
 }
 
 // ===============================
-// Event Wiring
+// Event wiring
 // ===============================
 
 function initOnboardingEvents() {
@@ -780,6 +877,7 @@ function initOnboardingEvents() {
       const form = document.getElementById("onboarding-form");
       if (form) form.reset();
       initDefaultDate();
+      initBusinessGoalSelect();
       updatePackageDescription();
       updatePriceSummary();
       updateQuestions();
@@ -805,6 +903,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initPackagesSelect();
   initAddonsCheckboxes();
+  initBusinessGoalSelect();
   initDefaultDate();
   updatePackageDescription();
   updatePriceSummary();
