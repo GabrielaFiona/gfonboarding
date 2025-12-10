@@ -16,15 +16,16 @@
       </div>
     </div>
     <nav class="app-nav">
-      <button class="nav-link active" data-page="home">Home</button>
-      <button class="nav-link" data-page="onboarding">On-Boarding</button>
-      <button class="nav-link" data-page="invoice">Invoice</button>
+      <!-- anchor links so they work even without JS -->
+      <a class="nav-link active" href="#home" data-page="home">Home</a>
+      <a class="nav-link" href="#onboarding" data-page="onboarding">On-Boarding</a>
+      <a class="nav-link" href="#invoice" data-page="invoice">Invoice</a>
     </nav>
   </header>
 
   <main class="app-main">
     <!-- HOME PAGE -->
-    <section id="home" class="page active">
+    <section id="home" class="page">
       <div class="intro-hero card">
         <div class="intro-copy">
           <h2>Use this during your call.</h2>
@@ -40,7 +41,9 @@
             <li>Auto-calculate a 50% deposit and remaining balance</li>
             <li>Generate an invoice you can email in one click</li>
           </ul>
-          <button class="primary" data-page="onboarding">Start On-Boarding</button>
+          <button class="primary" type="button" data-page="onboarding">
+            Start On-Boarding
+          </button>
         </div>
         <div class="intro-side">
           <div class="pill">Designed for intake calls</div>
@@ -68,7 +71,7 @@
         <h2>On-Boarding</h2>
         <p>
           Start with their business story, then move into objectives and exactly
-          what we’re building together.
+          what you’re building together.
         </p>
       </div>
 
@@ -104,11 +107,19 @@
             <div class="field two-up">
               <div>
                 <label for="business-industry">Industry / type of business</label>
-                <input type="text" id="business-industry" placeholder="e.g. residential cleaning, boutique retail, coaching" />
+                <input
+                  type="text"
+                  id="business-industry"
+                  placeholder="e.g. residential cleaning, boutique retail, coaching"
+                />
               </div>
               <div>
                 <label for="business-location">Primary location / service area</label>
-                <input type="text" id="business-location" placeholder="e.g. Newport, Oregon Coast, online only" />
+                <input
+                  type="text"
+                  id="business-location"
+                  placeholder="e.g. Newport, Oregon Coast, online only"
+                />
               </div>
             </div>
 
@@ -153,7 +164,7 @@
             <textarea
               id="business-goal-notes"
               rows="3"
-              placeholder="e.g. We want more quote requests from locals, fewer random calls, better way to send people to intake forms, etc."
+              placeholder="e.g. More quote requests from locals, clearer offers, easier way to send people to intake forms."
             ></textarea>
           </div>
 
@@ -185,6 +196,9 @@
             <div>
               <label for="package-select">Primary package</label>
               <select id="package-select" required></select>
+              <small class="field-help" id="package-description">
+                Select a package to see details and pricing.
+              </small>
             </div>
           </div>
 
@@ -234,8 +248,8 @@
           <div class="card summary-card">
             <h3>Price breakdown</h3>
             <p class="muted">
-              This is the same structure as your spreadsheet: base package +
-              add-ons – any discount. No surprise line items.
+              Same structure as your sheet: base package + add-ons – any discount.
+              Clear, no hidden items.
             </p>
 
             <div id="price-lines">
@@ -294,7 +308,9 @@
           No invoice yet. Go to <strong>On-Boarding</strong>, fill in the
           details, and click <strong>Generate invoice</strong> to create one.
         </p>
-        <button class="primary" data-page="onboarding">Go to On-Boarding</button>
+        <button class="primary" type="button" data-page="onboarding">
+          Go to On-Boarding
+        </button>
       </div>
 
       <div id="invoice-content" class="hidden">
@@ -312,6 +328,10 @@
             <div class="info-row">
               <span>Email</span>
               <span id="inv-email"></span>
+            </div>
+            <div class="info-row">
+              <span>Project</span>
+              <span id="inv-project-name"></span>
             </div>
             <div class="info-row">
               <span>Objective</span>
@@ -379,7 +399,9 @@
           </div>
 
           <div class="actions">
-            <button class="primary" id="send-invoice-btn">Open email draft</button>
+            <button class="primary" type="button" id="send-invoice-btn">
+              Open email draft
+            </button>
           </div>
 
           <p class="fine-print">
