@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Client Onboarding & Invoice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark">CB</span>
+      <div class="brand-text">
+        <h1>Client Onboarding & Invoice</h1>
+        <p>Guide your clients through scope, pricing, and next steps—all in one place.</p>
+      </div>
+    </div>
+    <nav class="app-nav">
+      <button class="nav-link active" data-page="home">Home</button>
+      <button class="nav-link" data-page="onboarding">On-Boarding</button>
+      <button class="nav-link" data-page="invoice">Invoice</button>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+      <div class="grid two-col">
+        <div class="card">
+          <h2>Welcome</h2>
+          <p>
+            Use this tool during your client intake or onboarding call to:
+          </p>
+          <ul class="feature-list">
+            <li>Collect client & project details</li>
+            <li>Choose a package and add-ons together</li>
+            <li>Show a live price breakdown in plain language</li>
+            <li>Generate a clean invoice you can email right away</li>
+          </ul>
+          <button class="primary" data-page="onboarding">
+            Start On-Boarding
+          </button>
+        </div>
+
+        <div class="card">
+          <h2>How it works</h2>
+          <ol class="steps">
+            <li><strong>On-Boarding:</strong> Fill out client details, select the main website package, and toggle add-ons.</li>
+            <li><strong>Smart Questions:</strong> Core questions always show; extra questions appear only for selected add-ons.</li>
+            <li><strong>Invoice:</strong> Review the itemized breakdown, then email the invoice in a couple of clicks.</li>
+          </ol>
+          <p class="tip">
+            All logic here mirrors your spreadsheet (packages, add-ons, and intake questions),
+            just with a friendlier UI.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ONBOARDING PAGE -->
+    <section id="onboarding" class="page">
+      <div class="page-header">
+        <h2>Client On-Boarding</h2>
+        <p>Capture the essentials, choose services, and walk through pricing transparently.</p>
+      </div>
+
+      <div class="grid two-col">
+        <!-- LEFT: FORM -->
+        <form id="onboarding-form" class="card">
+          <h3>Client Details</h3>
+
+          <div class="field">
+            <label for="client-name">Client Name</label>
+            <input type="text" id="client-name" required />
+          </div>
+
+          <div class="field">
+            <label for="client-email">Client Email</label>
+            <input type="email" id="client-email" required />
+          </div>
+
+          <div class="field">
+            <label for="business-name">Business / Brand Name</label>
+            <input type="text" id="business-name" />
+          </div>
+
+          <div class="field">
+            <label for="project-name">Project Name</label>
+            <input type="text" id="project-name" placeholder="e.g. Spring Merch Launch" />
+          </div>
+
+          <div class="field">
+            <label for="start-date">Onboarding Date</label>
+            <input type="date" id="start-date" />
+          </div>
+
+          <hr />
+
+          <h3>Services & Scope</h3>
+
+          <div class="field">
+            <label for="package-select">Primary Package</label>
+            <select id="package-select" required></select>
+            <small class="field-help" id="package-description">
+              Select a package to see details and pricing.
+            </small>
+          </div>
+
+          <div class="field">
+            <label>Add-ons / Services</label>
+            <div class="checkbox-group" id="addon-checkboxes">
+              <!-- Add-on checkboxes injected by JS -->
+            </div>
+            <small class="field-help">
+              Selecting add-ons will also reveal any extra questions you need to ask the client.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="discount">Custom Discount (optional)</label>
+            <div class="input-with-addon">
+              <span>$</span>
+              <input type="number" id="discount" min="0" step="1" value="0" />
+            </div>
+            <small class="field-help">
+              Use this if you give a package deal or special rate.
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="notes">Notes / Goals</label>
+            <textarea
+              id="notes"
+              rows="4"
+              placeholder="Client goals, audience, must-have features, launch date, etc."
+            ></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="secondary" id="reset-form">Reset</button>
+            <button type="button" class="primary" id="generate-invoice">
+              Generate Invoice
+            </button>
+          </div>
+        </form>
+
+        <!-- RIGHT: SUMMARY + QUESTIONS -->
+        <div class="right-column">
+          <div class="card summary-card">
+            <h3>Price Breakdown</h3>
+            <div id="price-lines">
+              <!-- Line items inserted here -->
+            </div>
+            <div class="price-totals">
+              <div class="price-row">
+                <span>Subtotal</span>
+                <span id="subtotal-amount">$0</span>
+              </div>
+              <div class="price-row">
+                <span>Discount</span>
+                <span id="discount-amount">-$0</span>
+              </div>
+              <div class="price-row total">
+                <span>Total</span>
+                <span id="total-amount">$0</span>
+              </div>
+            </div>
+            <p class="fine-print">
+              This is a working quote based on your selections. Final totals can be adjusted if scope changes.
+            </p>
+          </div>
+
+          <div class="card questions-card">
+            <h3>Questions for This Client</h3>
+            <p class="questions-intro">
+              These questions are pulled from your systems checklist and tailored to the services you select.
+              Use them live on the call and jot quick notes below each one.
+            </p>
+            <div id="question-list">
+              <!-- Questions rendered here -->
+            </div>
+            <small class="field-help">
+              Tip: You can copy/paste these answers into your project doc or email after the call.
+            </small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVOICE PAGE -->
+    <section id="invoice" class="page">
+      <div class="page-header">
+        <h2>Invoice</h2>
+        <p>Review the project summary, confirm the investment, and send a copy to your client.</p>
+      </div>
+
+      <div id="invoice-empty" class="card">
+        <p>
+          No invoice yet. Go to <strong>On-Boarding</strong>, fill in the client details, and click
+          <strong>Generate Invoice</strong> to create one.
+        </p>
+        <button class="primary" data-page="onboarding">Go to On-Boarding</button>
+      </div>
+
+      <div id="invoice-content" class="hidden">
+        <div class="grid two-col invoice-top">
+          <div class="card">
+            <h3>Invoice Details</h3>
+            <div class="info-row">
+              <span>Client:</span>
+              <span id="inv-client-name"></span>
+            </div>
+            <div class="info-row">
+              <span>Business:</span>
+              <span id="inv-business-name"></span>
+            </div>
+            <div class="info-row">
+              <span>Email:</span>
+              <span id="inv-email"></span>
+            </div>
+            <div class="info-row">
+              <span>Project:</span>
+              <span id="inv-project-name"></span>
+            </div>
+            <div class="info-row">
+              <span>Invoice Date:</span>
+              <span id="inv-date"></span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Investment Summary</h3>
+            <table class="invoice-table">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th class="num">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="invoice-line-items">
+                <!-- Line items inserted here -->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Subtotal</td>
+                  <td class="num" id="inv-subtotal">$0</td>
+                </tr>
+                <tr>
+                  <td>Discount</td>
+                  <td class="num" id="inv-discount">-$0</td>
+                </tr>
+                <tr class="total-row">
+                  <td>Total</td>
+                  <td class="num" id="inv-total">$0</td>
+                </tr>
+                <tr>
+                  <td>50% Deposit Due</td>
+                  <td class="num" id="inv-deposit">$0</td>
+                </tr>
+                <tr>
+                  <td>Remaining 50%</td>
+                  <td class="num" id="inv-remaining">$0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="card email-card">
+          <h3>Send Invoice to Client</h3>
+          <p>
+            This will open a draft email in your default mail app with the invoice details pre-filled.
+          </p>
+
+          <div class="field">
+            <label for="invoice-email-to">To (client email)</label>
+            <input type="email" id="invoice-email-to" />
+          </div>
+
+          <div class="field">
+            <label for="invoice-email-bcc">BCC (your email, optional)</label>
+            <input type="email" id="invoice-email-bcc" placeholder="you@example.com" />
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="send-invoice-btn">Open Email Draft</button>
+          </div>
+
+          <p class="fine-print">
+            You can edit the email before sending. If you prefer, you can also copy the invoice table
+            above into your own template.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span>Built from your onboarding spreadsheet logic – now with a prettier face ✨</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
